@@ -168,11 +168,19 @@ class TripService {
 
          return new Promise((resolve, reject) => {
 
-             setTimeout( () => {
+             setTimeout( (/*fn,delay*/) => {
                  // ici l'exécution du code est asynchrone
 
                  // TODO utiliser resolve et reject en fonction du résultat de la recherche
-
+                 let array = Array.from(this.trips);
+                 let find = array.find(function(e) {
+                   return e.name == tripName;
+                 });
+                 if (find) {
+                   resolve(find);
+                 } else {
+                   reject("pas de trip avec ce nom :"+ tripName);
+                 }
              }, 2000)
         });
     }
@@ -206,6 +214,13 @@ class PriceService {
                         // ici l'exécution du code est asynchrone
 
                         // TODO utiliser resolve et reject en fonction du résultat de la recherche
+
+                        let find = this.prices.get(tripId);
+                        if (find) {
+                          resolve("Price - found :"+find );
+                        } else {
+                          reject("No price found for id :" + tripId);
+                        }
 
                     }, 2000)
                });
